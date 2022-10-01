@@ -37,4 +37,4 @@ await studentScore.request("stu_oNAYIOH1");
 
 ## License
 
-Nagle Request is Apache 2.0 licensed.s
+Nagle Request is Apache 2.0 licensed.
