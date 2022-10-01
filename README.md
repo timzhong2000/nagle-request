@@ -1,3 +1,5 @@
+English | [简体中文](./README.zh-cn.md)
+
 # Nagle Request
 
 Nagle Request is a library for arranging a huge amount of requests in one request.
@@ -10,7 +12,7 @@ This project is inspired by [Nagle Algorithm](https://en.wikipedia.org/wiki/Nagl
 
 - **Batch Size Limit** - A request will be send immediately when the queue length reach the limit.
 
-- **Pluggable Cache** - You can plugin any cache to provide flexable cache. You can also plugin JavaScript Map, and it can work fine.
+- **Optional Pluggable Cache** - You can plugin any cache to provide flexable cache. You can also plugin JavaScript Map, and it can work fine. You can provide undefined and it will disable the cache.
 
 ## Getting Started
 
