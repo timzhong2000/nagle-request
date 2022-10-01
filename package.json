@@ -1,0 +1,26 @@
+{
+  "name": "nagle-request",
+  "version": "0.0.1",
+  "description": "arrange high freqency request in a single request",
+  "main": "index.ts",
+  "dependencies": {
+    "lodash-es": "4.17.21"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "vitest": "^0.23.4"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc"
+  },
+  "author": "Tim-Zhong-2000",
+  "license": "ISC"
+}
