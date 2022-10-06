@@ -4,13 +4,13 @@ import { NagleRequest } from "./index";
 test("batch request created in debounce time", async () => {
   let count = 0;
   let batchLength: number[] = [];
-  const nagleRequest = new NagleRequest<number, number>({
+  const nagleRequest = new NagleRequest({
     debounce: 50,
     maxRequestCount: 1000,
     batchRequestFn: (value: number[]) => {
       batchLength.push(value.length);
       count++;
-      return new Promise((r) =>
+      return new Promise<number[]>((r) =>
         setTimeout(() => r(value.map((num) => num + 1)), 10)
       );
     },
@@ -36,13 +36,13 @@ test("batch request created in debounce time", async () => {
 test("split request if debounce time reach", async () => {
   let count = 0;
   let batchLength: number[] = [];
-  const nagleRequest = new NagleRequest<number, number>({
+  const nagleRequest = new NagleRequest({
     debounce: 50,
     maxRequestCount: 1000,
     batchRequestFn: (value: number[]) => {
       batchLength.push(value.length);
       count++;
-      return new Promise((r) =>
+      return new Promise<number[]>((r) =>
         setTimeout(() => r(value.map((num) => num + 1)), 10)
       );
     },
@@ -59,19 +59,22 @@ test("split request if debounce time reach", async () => {
   await nagleRequest.request(10000);
 
   expect(count, "splited into 2 requests").toBe(2);
-  expect(batchLength, "first request length: 700, second request length: 1").toStrictEqual([700, 1]);
+  expect(
+    batchLength,
+    "first request length: 700, second request length: 1"
+  ).toStrictEqual([700, 1]);
 });
 
 test("unique request key", async () => {
   let count = 0;
   let batchLength: number[] = [];
-  const nagleRequest = new NagleRequest<number, number>({
+  const nagleRequest = new NagleRequest({
     debounce: 50,
     maxRequestCount: 1000,
     batchRequestFn: (value: number[]) => {
       batchLength.push(value.length);
       count++;
-      return new Promise((r) =>
+      return new Promise<number[]>((r) =>
         setTimeout(() => r(value.map((num) => num + 1)), 10)
       );
     },
@@ -91,13 +94,13 @@ test("unique request key", async () => {
 test("return result immediately if hit cache", async () => {
   let count = 0;
   let batchLength: number[] = [];
-  const nagleRequest = new NagleRequest<number, number>({
+  const nagleRequest = new NagleRequest({
     debounce: 50,
     maxRequestCount: 1000,
     batchRequestFn: (value: number[]) => {
       batchLength.push(value.length);
       count++;
-      return new Promise((r) =>
+      return new Promise<number[]>((r) =>
         setTimeout(() => r(value.map((num) => num + 1)), 10)
       );
     },
@@ -108,7 +111,10 @@ test("return result immediately if hit cache", async () => {
   expect(count, "create only 1 request").toBe(1);
 
   expect(await nagleRequest.request(100)).toBe(101);
-  expect(count, "create only 1 request with length 1, the second request should hit cache").toBe(1);
+  expect(
+    count,
+    "create only 1 request with length 1, the second request should hit cache"
+  ).toBe(1);
 });
 
 test("request when cache is miss", async () => {
@@ -121,13 +127,13 @@ test("request when cache is miss", async () => {
   }
   let count = 0;
   let batchLength: number[] = [];
-  const nagleRequest = new NagleRequest<number, number>({
+  const nagleRequest = new NagleRequest({
     debounce: 50,
     maxRequestCount: 1000,
     batchRequestFn: (value: number[]) => {
       batchLength.push(value.length);
       count++;
-      return new Promise((r) =>
+      return new Promise<number[]>((r) =>
         setTimeout(() => r(value.map((num) => num + 1)), 10)
       );
     },
@@ -153,13 +159,13 @@ test("request when cache is miss", async () => {
 test("maxRequestCount test", async () => {
   let count = 0;
   let batchLength: number[] = [];
-  const nagleRequest = new NagleRequest<number, number>({
+  const nagleRequest = new NagleRequest({
     debounce: 50,
     maxRequestCount: 1000,
     batchRequestFn: (value: number[]) => {
       batchLength.push(value.length);
       count++;
-      return new Promise((r) =>
+      return new Promise<number[]>((r) =>
         setTimeout(() => r(value.map((num) => num + 1)), 10)
       );
     },
@@ -170,8 +176,12 @@ test("maxRequestCount test", async () => {
   expect(
     await Promise.all(
       testList.map((testcase) => nagleRequest.request(testcase))
-    ), "result should be correct"
+    ),
+    "result should be correct"
   ).toStrictEqual(testList.map((testcase) => testcase + 1));
   expect(count, "create 2 requests").toBe(2);
-  expect(batchLength, "each request size should be maxRequestCount").toStrictEqual([1000, 1000]);
+  expect(
+    batchLength,
+    "each request size should be maxRequestCount"
+  ).toStrictEqual([1000, 1000]);
 });
