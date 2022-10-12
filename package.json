@@ -2,7 +2,7 @@
   "name": "nagle-request",
   "version": "0.0.1",
   "description": "arrange high freqency request in a single request",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "dependencies": {
     "lodash-es": "4.17.21"
   },

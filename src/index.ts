@@ -1,4 +1,4 @@
-import { ICache, Config, OnError, OnSuccess, QueueItem } from "./types";
+import { ICache, Config } from "./types";
 import { debounce, DebouncedFunc } from "lodash-es";
 import { Deferred } from "./deferred";
 
